@@ -1,3 +1,21 @@
-from django.shortcuts import render
+from loan.models import LoanRequestField, LoanRequest
+from rest_framework import viewsets
+from loan.serializers import LoanRequestFieldSerializer, LoanRequestSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 
-# Create your views here.
+
+class LoanRequestFieldViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = LoanRequestField.objects.all()
+    serializer_class = LoanRequestFieldSerializer
+
+@api_view(['POST'])
+def create_loan_request(request):
+    loan_request = LoanRequestSerializer(data=request.data)
+    if not loan_request.is_valid():
+        return Response(
+            loan_request.errors, status=status.HTTP_400_BAD_REQUEST)
+    loan_request.save()
+    return Response({'message': 'pedido realizado'}, status=status.HTTP_200_OK)
+    

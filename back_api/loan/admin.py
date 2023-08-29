@@ -1,3 +1,4 @@
 from django.contrib import admin
+from loan.models import LoanRequest, LoanRequestField
 
-# Register your models here.
+admin.site.register([LoanRequest, LoanRequestField])
