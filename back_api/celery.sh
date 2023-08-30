@@ -1,0 +1,1 @@
+celery -A loan.tasks worker --loglevel=INFO

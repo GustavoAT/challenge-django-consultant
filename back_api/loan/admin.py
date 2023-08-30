@@ -1,4 +1,12 @@
 from django.contrib import admin
-from loan.models import LoanRequest, LoanRequestField
+from loan.models import LoanRequest, LoanRequestField, LoanRequestValue
 
-admin.site.register([LoanRequest, LoanRequestField])
+class LoanFieldValueInline(admin.TabularInline):
+    model = LoanRequestValue
+
+
+class LoanRequestAdmin(admin.ModelAdmin):
+    inlines = [LoanFieldValueInline]
+    
+admin.site.register(LoanRequest, LoanRequestAdmin)
+admin.site.register(LoanRequestField)

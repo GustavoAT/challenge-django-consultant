@@ -7,4 +7,5 @@ router.register(r'fields', views.LoanRequestFieldViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('request/', views.create_loan_request),
 ]

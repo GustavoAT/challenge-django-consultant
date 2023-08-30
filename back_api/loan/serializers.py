@@ -10,17 +10,18 @@ class LoanRequestFieldSerializer(serializers.ModelSerializer):
 class LoanRequestValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanRequestValue
-        fields = '__all__'
+        exclude = ['loan_request']
 
 class LoanRequestSerializer(serializers.ModelSerializer):
     extra_fields = LoanRequestValueSerializer(many=True)
     
     class Meta:
         model = LoanRequest
-        exclude = ['id']
+        exclude = ['id', 'status']
     
     def create(self, validated_data):
         fields_data = validated_data.pop('extra_fields')
+        validated_data['status'] = 3
         loan_request = LoanRequest.objects.create(**validated_data)
         for fdata in fields_data:
             LoanRequestValue.objects.create(loan_request=loan_request, **fdata)
