@@ -24,4 +24,7 @@ depois, para migrar e adicionar o usuário inicial execute:
 
 `sudo docker compose exec back_api bash ./initdb.sh`
 
-Isto irá criar um superusuário com nome "user1" e senha "nosecurepassword"
+Isto irá criar um superusuário com nome "user1" e senha "nosecurepassword".
+
+Acesse o painel admin em http://localhost:8080/admin/
+e o cadastro de empréstimo em http://localhost:8081
