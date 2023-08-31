@@ -4,4 +4,6 @@ WORKDIR /app
 
 COPY ./loan .
 
-CMD "npm run"
+RUN npm run build
+
+CMD ["npm", "start"]

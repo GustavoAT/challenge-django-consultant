@@ -25,3 +25,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+input {
+  margin-left: 5px;
+  margin-top: 5px;
+  color: black;
+}
+
+[type=submit], button {
+  margin-top: 5px;
+  background-color: darkgreen;
+  border-radius: 3px;
+  padding: 2px;
+}
