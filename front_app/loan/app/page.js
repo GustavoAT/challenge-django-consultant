@@ -1,14 +1,18 @@
 import FormPage from "./formcomponent"
 
 async function getData() {
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_API_URL + "fields/",
-    { next: { revalidate: 30 }}
-  )
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
+  try {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + "fields/",
+      { next: { revalidate: 30 }}
+    )
+    if (!res.ok) {
+      return []
+    }
+    return res.json()
+  } catch (error) {
+    return []
   }
-  return res.json()
 }
 
 export default async function Page() {

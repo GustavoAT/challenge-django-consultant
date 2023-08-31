@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  broker:
+    image: rabbitmq:3.11
+
+  front_app:
+    build:
+      context: ./front_app
+      dockerfile: ./docker/Dockerfile
+    depends_on:
+      - back_api
+    ports:
+      - "8081:3000"
+
+  back_api:
+    build:
+      context: ./back_api
+      dockerfile: ./docker/Dockerfile
+    env_file: ./back_api/.env
+    depends_on:
+      - broker
+      - db
+    ports:
+      - "8080:8000"
+  
+  celeryworker:
+    build:
+        context: ./back_api
+        dockerfile: ./docker/Dockerfile
+    env_file: ./back_api/.env
+    command: celery -A loan.tasks worker --loglevel=INFO
+    depends_on:
+      - broker
+      - db
+  
+  db:
+    image: postgres:14
+    env_file: ./back_api/db.env
