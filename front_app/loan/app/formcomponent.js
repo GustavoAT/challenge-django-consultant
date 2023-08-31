@@ -23,6 +23,17 @@ export default function FormPage({extraFields}) {
     }));
   }
 
+  const handleInputExtra = (value, index, fieldId) => {
+    const fieldName = "extra_fields";
+    let extra_fields2 = formData[fieldName];
+    extra_fields2[index] = {loan_request_field: fieldId, value: value}
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [fieldName]: extra_fields2
+    }));
+  }
+
   const submitForm = (e) => {
     e.preventDefault()
 
@@ -65,16 +76,31 @@ export default function FormPage({extraFields}) {
           </div>
           {extraFields.map((field, index) => {
             return (
-              <div key={field.id}>
-                <label>{field.name}</label>
-                <input type="text" name={field.name} value={formData.extra_fields[index].value} />
-              </div>
+              <ExtraInput 
+                key={field.id}
+                field={field}
+                value={formData[index]?.value}
+                index={index}
+                onChange={handleInputExtra}
+              />
             )
           })}
 
           <button type="submit">Solicitar</button>
         </form>
       }
+    </div>
+  )
+}
+
+function ExtraInput({field, value, index, onChange}){
+  const handlechange = (e) => {
+    onChange(e.target.value, index, field.id)
+  }
+  return (
+    <div>
+      <label>{field.name}</label>
+      <input type="text" onChange={handlechange} name={field.name} value={value} />
     </div>
   )
 }

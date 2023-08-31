@@ -1,7 +1,10 @@
 import FormPage from "./formcomponent"
 
 async function getData() {
-  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "fields/")
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + "fields/",
+    { next: { revalidate: 30 }}
+  )
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
